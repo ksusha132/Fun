@@ -1,6 +1,6 @@
-package com.epam.dto;
+package com.epam.model;
 
-public class User {
+public class RoleModel {
     private Integer id;
     private String name;
 
