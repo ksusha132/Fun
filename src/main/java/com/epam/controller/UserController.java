@@ -4,11 +4,10 @@ import com.epam.dto.UserDTO;
 import com.epam.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Controller
@@ -36,9 +35,17 @@ public class UserController {
         return modelAndView;
     }
 
-    @PostMapping(value = "/register")
-    public void registerUser() {
+    @GetMapping(value = "/register")
+    public ModelAndView registerUser() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("registerUser");
+        return modelAndView;
+    }
 
-        //userService.registerUser();
+    @PostMapping(value = "/register")
+    public void registerUser(@RequestParam String name, @RequestParam String email, @RequestParam LocalDate date) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setName(name);
+        userService.registerUser(userDTO);
     }
 }
