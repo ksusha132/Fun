@@ -7,6 +7,7 @@ public class UserModel {
     private String name;
     private String email;
     private Date birthday;
+    private String role;
 
     public String getName() {
         return name;
@@ -39,5 +40,13 @@ public class UserModel {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

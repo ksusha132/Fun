@@ -7,8 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
@@ -17,19 +15,9 @@ public class UserController {
     UserService userService;
 
     @RequestMapping(value = "/getUsers", method = RequestMethod.GET)
-    public ModelAndView getUsers() {
-        UserDTO userDTO1 = new UserDTO();
-        userDTO1.setName("Victor");
-
-        UserDTO userDTO2 = new UserDTO();
-        userDTO2.setName("Vasilii");
-
-        ArrayList<UserDTO> userDTOS = new ArrayList<UserDTO>();
-        userDTOS.add(userDTO1);
-        userDTOS.add(userDTO2);
-
+    public ModelAndView getAllUsers() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("userObjects", userDTOS);
+        modelAndView.addObject("userObjects", userService.getAllUsers());
         modelAndView.setViewName("user");
         return modelAndView;
     }
