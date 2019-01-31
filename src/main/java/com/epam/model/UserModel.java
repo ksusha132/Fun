@@ -1,12 +1,12 @@
 package com.epam.model;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 public class UserModel {
     private Integer id;
     private String name;
     private String email;
-    private LocalDate birthday;
+    private Date birthday;
 
     public String getName() {
         return name;
@@ -33,11 +33,11 @@ public class UserModel {
         this.id = id;
     }
 
-    public LocalDate getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(LocalDate birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 }

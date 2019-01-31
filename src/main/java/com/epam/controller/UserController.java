@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Controller
@@ -43,9 +42,11 @@ public class UserController {
     }
 
     @PostMapping(value = "/register")
-    public void registerUser(@RequestParam String name, @RequestParam String email, @RequestParam LocalDate date) {
+    public void registerUser(@RequestParam String name, @RequestParam String email, @RequestParam String birthday) {
         UserDTO userDTO = new UserDTO();
         userDTO.setName(name);
+        userDTO.setEmail(email);
+        userDTO.setBirthday(java.sql.Date.valueOf(birthday));
         userService.registerUser(userDTO);
     }
 }

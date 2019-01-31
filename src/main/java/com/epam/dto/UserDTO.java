@@ -1,10 +1,10 @@
 package com.epam.dto;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
 public class UserDTO {
     private String name;
-    private LocalDate birthday;
+    private Date birthday;
     private String email;
 
     public String getName() {
@@ -15,11 +15,11 @@ public class UserDTO {
         this.name = name;
     }
 
-    public LocalDate getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(LocalDate birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 

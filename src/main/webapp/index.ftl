@@ -1,5 +1,5 @@
 <html>
-<head><title>Acmee Products International</title>
+<head><title>Main Page</title>
 <body>
 <h1>Hello!</h1>
 <ul>
