@@ -18,7 +18,7 @@ public class UserController {
     public ModelAndView getAllUsers() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("userObjects", userService.getAllUsers());
-        modelAndView.setViewName("user");
+        modelAndView.setViewName("users");
         return modelAndView;
     }
 
@@ -37,4 +37,32 @@ public class UserController {
         userDTO.setBirthday(java.sql.Date.valueOf(birthday));
         userService.registerUser(userDTO);
     }
+
+
+    @GetMapping(value = "/delete/{id}")
+    public ModelAndView deleteUser(@PathVariable Integer id) {
+        userService.delete(id);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("users");
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/getUser/{id}")
+    public ModelAndView getUser(@PathVariable Integer id) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", userService.getUserById(id));
+        modelAndView.setViewName("user");
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/getUserByEmail/{email}")
+    public ModelAndView getUser(@PathVariable("email") String email) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", userService.getUserByEmail(email));
+        modelAndView.setViewName("user");
+        return modelAndView;
+    }
+
+    // update user 2 get post
+
 }

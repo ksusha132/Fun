@@ -35,4 +35,19 @@ public class UserServiceImpl implements UserService {
         });
         return userDTOList;
     }
+
+    @Override
+    public void delete(Integer id) {
+        userDao.deleteUser(id);
+    }
+
+    @Override
+    public UserDTO getUserById(Integer id) {
+        return UserModelToUserDtoConverter.convert(userDao.getById(id));
+    }
+
+    @Override
+    public UserDTO getUserByEmail(String email) {
+        return UserModelToUserDtoConverter.convert(userDao.getByEmail(email));
+    }
 }

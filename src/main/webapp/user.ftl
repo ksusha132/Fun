@@ -1,10 +1,11 @@
+
 <html>
-<head><title>Acmee Products International</title>
+<head>
+    <title>User</title>
+</head>
 <body>
-<ul>
-    <#list userObjects as userObject>
-        <li>${userObject.name}</li>
-    </#list>
-</ul>
+<p>${user.name}</p>
+<p>${user.birthday}</p>
+<p>${user.email}</p>
 </body>
 </html>
