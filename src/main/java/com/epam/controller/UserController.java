@@ -36,6 +36,7 @@ public class UserController {
         userDTO.setName(name);
         userDTO.setEmail(email);
         userDTO.setBirthday(java.sql.Date.valueOf(birthday));
+        userDTO.setRole("USER_ROLE");
         userService.registerUser(userDTO);
         modelAndView.setViewName("index");
         return modelAndView;

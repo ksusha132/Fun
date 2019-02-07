@@ -7,8 +7,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -19,23 +19,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public void registerUser(UserDTO userDTO) {
         UserModel userModel = new UserModel();
-        userModel.setName(userDTO.getName());
-        userModel.setEmail(userDTO.getEmail());
-        userModel.setBirthday(userDTO.getBirthday());
-        userModel.setRole("USER_ROLE");
+        BeanUtils.copyProperties(userDTO, userModel);
         userDao.save(userModel);
     }
 
     @Override
     public List<UserDTO> getAllUsers() {
         List<UserModel> userModels = userDao.getAllUsers();
-        List<UserDTO> userDTOList = new ArrayList<>();
-        userModels.forEach(userModel -> {
-            UserDTO userDTO = new UserDTO();
-            BeanUtils.copyProperties(userModel, userDTO);
-            userDTOList.add(userDTO);
-        });
-        return userDTOList;
+        return userModels.stream()
+                .map(this::convertUserDto)
+                .collect(Collectors.toList());
+    }
+
+    private UserDTO convertUserDto(UserModel userModel) {
+        UserDTO userDTO = new UserDTO();
+        BeanUtils.copyProperties(userModel, userDTO);
+        return userDTO;
     }
 
     @Override

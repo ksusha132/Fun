@@ -36,6 +36,7 @@ public class LowagiePdfView extends AbstractPdfView {
                 table.addCell(DATE_FORMAT.format(userDTO.getBirthday()));
             });
         }
+
         document.add(table);
     }
 }
