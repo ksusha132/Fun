@@ -21,23 +21,21 @@ public class LowagiePdfView extends AbstractPdfView {
                                     HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
 
         @SuppressWarnings("unchecked")
-        List<UserDTO> users = (List<UserDTO>) model.get("users");
-
+        List<UserDTO> users = (List<UserDTO>) model.get("usersPdf");
 
         PdfPTable table = new PdfPTable(3);
         table.setWidths(new int[]{10, 60, 30});
-
         table.addCell("Name");
         table.addCell("Email");
         table.addCell("Birthday");
 
-        users.forEach(userDTO -> {
-            table.addCell(userDTO.getName());
-            table.addCell(userDTO.getEmail());
-            table.addCell(DATE_FORMAT.format(userDTO.getBirthday()));
-        });
-
+        if (users != null) {
+            users.forEach(userDTO -> {
+                table.addCell(userDTO.getName());
+                table.addCell(userDTO.getEmail());
+                table.addCell(DATE_FORMAT.format(userDTO.getBirthday()));
+            });
+        }
         document.add(table);
-
     }
 }

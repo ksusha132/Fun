@@ -10,7 +10,7 @@
         <th>Email</th>
         <th>Birthday</th>
     </tr>
-  <#list users as user>
+  <#list usersPdf as user>
   <tr>
       <td>${user.name}</td>
       <td>${user.email}</td>

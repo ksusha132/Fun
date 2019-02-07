@@ -18,8 +18,8 @@ public class PdfController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String getDocuments(Model model) {
-        List<UserDTO> users = userService.getAllUsers();
-        model.addAttribute("users", users);
+        List<UserDTO> userDTOS = userService.getAllUsers();
+        model.addAttribute("usersPdf", userDTOS);
         return "pdfUsers";
 
     }

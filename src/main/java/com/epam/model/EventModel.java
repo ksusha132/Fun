@@ -1,5 +1,9 @@
 package com.epam.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.NavigableMap;
@@ -7,7 +11,9 @@ import java.util.NavigableSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-
+@Getter
+@Setter
+@AllArgsConstructor
 public class EventModel {
     private Long id;
     private String name;
@@ -16,57 +22,9 @@ public class EventModel {
     private String auditoriumName;
     private String auditoriumString;
 
-    public String getAuditoriumString() {
-        return auditoriumString;
-    }
-
-    public void setAuditoriumString(String auditoriumString) {
-        this.auditoriumString = auditoriumString;
-    }
-
     private NavigableSet<LocalDateTime> airDates = new TreeSet<>();
     private NavigableMap<LocalDateTime, Auditorium> auditoriums = new TreeMap<>();
 
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getRating() {
-        return rating;
-    }
-
-    public void setRating(String rating) {
-        this.rating = rating;
-    }
-
-    public double getBasePrice() {
-        return basePrice;
-    }
-
-    public void setBasePrice(double basePrice) {
-        this.basePrice = basePrice;
-    }
-
-    public String getAuditoriumName() {
-        return auditoriumName;
-    }
-
-    public void setAuditoriumName(String auditoriumName) {
-        this.auditoriumName = auditoriumName;
-    }
 
     /**
      * Checks if event is aired on particular <code>dateTime</code> and assigns
@@ -170,29 +128,5 @@ public class EventModel {
     public boolean airsOnDates(LocalDate from, LocalDate to) {
         return airDates.stream()
                 .anyMatch(dt -> dt.toLocalDate().compareTo(from) >= 0 && dt.toLocalDate().compareTo(to) <= 0);
-    }
-
-    public void clearAuditoriumAndAirdates() {
-        auditoriums.clear();
-    }
-
-    public void clearAirDates() {
-        airDates.clear();
-    }
-
-    public NavigableSet<LocalDateTime> getAirDates() {
-        return airDates;
-    }
-
-    public void setAirDates(NavigableSet<LocalDateTime> airDates) {
-        this.airDates = airDates;
-    }
-
-    public NavigableMap<LocalDateTime, Auditorium> getAuditoriums() {
-        return auditoriums;
-    }
-
-    public void setAuditoriums(NavigableMap<LocalDateTime, Auditorium> auditoriums) {
-        this.auditoriums = auditoriums;
     }
 }

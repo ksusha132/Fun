@@ -1,9 +1,9 @@
 package com.epam.service;
 
-import com.epam.converter.UserModelToUserDtoConverter;
 import com.epam.dao.UserDao;
 import com.epam.dto.UserDTO;
 import com.epam.model.UserModel;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    UserDao userDao;
+    private UserDao userDao;
 
     @Override
     public void registerUser(UserDTO userDTO) {
@@ -31,7 +31,9 @@ public class UserServiceImpl implements UserService {
         List<UserModel> userModels = userDao.getAllUsers();
         List<UserDTO> userDTOList = new ArrayList<>();
         userModels.forEach(userModel -> {
-            userDTOList.add(UserModelToUserDtoConverter.convert(userModel));
+            UserDTO userDTO = new UserDTO();
+            BeanUtils.copyProperties(userModel, userDTO);
+            userDTOList.add(userDTO);
         });
         return userDTOList;
     }
@@ -43,11 +45,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getUserById(Integer id) {
-        return UserModelToUserDtoConverter.convert(userDao.getById(id));
+        UserDTO userDTO = new UserDTO();
+        BeanUtils.copyProperties(userDao.getById(id), userDTO);
+        return userDTO;
     }
 
     @Override
     public UserDTO getUserByEmail(String email) {
-        return UserModelToUserDtoConverter.convert(userDao.getByEmail(email));
+        UserDTO userDTO = new UserDTO();
+        BeanUtils.copyProperties(userDao.getByEmail(email), userDTO);
+        return userDTO;
     }
 }

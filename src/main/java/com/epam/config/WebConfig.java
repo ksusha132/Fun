@@ -53,7 +53,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
         registry.order(1);
-        registry.freeMarker().viewNames("pdfUsers");
+        registry.freeMarker().prefix("/document").viewNames("pdfUsers");
         registry.enableContentNegotiation(
                 new LowagiePdfView()
         );
