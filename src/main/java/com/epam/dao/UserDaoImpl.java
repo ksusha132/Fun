@@ -1,9 +1,9 @@
 package com.epam.dao;
 
 import com.epam.helper.UserHelper;
-import com.epam.mapper.UserMapper;
 import com.epam.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -24,7 +24,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public List<UserModel> getAllUsers() {
         String SQL = "SELECT * FROM person";
-        return jdbcTemplate.query(SQL, new UserMapper());
+        return jdbcTemplate.query(SQL, new BeanPropertyRowMapper<>(UserModel.class));
     }
 
     @Override
@@ -36,12 +36,12 @@ public class UserDaoImpl implements UserDao {
     @Override
     public UserModel getById(Integer id) {
         String SQL = "SELECT * FROM person WHERE id = ?";
-        return (UserModel) jdbcTemplate.queryForObject(SQL, new Object[]{id}, new UserMapper());
+        return (UserModel) jdbcTemplate.queryForObject(SQL, new Object[]{id}, new BeanPropertyRowMapper<>(UserModel.class));
     }
 
     @Override
     public UserModel getByEmail(String email) {
         String SQL = "SELECT * FROM person WHERE email = ?";
-        return (UserModel) jdbcTemplate.queryForObject(SQL, new Object[]{email}, new UserMapper());
+        return (UserModel) jdbcTemplate.queryForObject(SQL, new Object[]{email}, new BeanPropertyRowMapper<>(UserModel.class));
     }
 }
