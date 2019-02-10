@@ -1,6 +1,6 @@
 package com.epam.viewResolver;
 
-import com.epam.dto.UserDTO;
+import com.epam.dto.UserDto;
 import com.lowagie.text.Document;
 import com.lowagie.text.Element;
 import com.lowagie.text.pdf.PdfPTable;
@@ -23,7 +23,7 @@ public class LowagiePdfView extends AbstractPdfView {
                                     HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
 
         @SuppressWarnings("unchecked")
-        List<UserDTO> users = (List<UserDTO>) model.get("usersPdf");
+        List<UserDto> users = (List<UserDto>) model.get("usersPdf");
 
         PdfPTable table = new PdfPTable(3);
 

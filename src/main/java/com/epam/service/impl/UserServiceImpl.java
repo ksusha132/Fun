@@ -1,8 +1,9 @@
-package com.epam.service;
+package com.epam.service.impl;
 
 import com.epam.dao.UserDao;
-import com.epam.dto.UserDTO;
+import com.epam.dto.UserDto;
 import com.epam.model.UserModel;
+import com.epam.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,24 +18,24 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Override
-    public void registerUser(UserDTO userDTO) {
+    public void registerUser(UserDto userDto) {
         UserModel userModel = new UserModel();
-        BeanUtils.copyProperties(userDTO, userModel);
+        BeanUtils.copyProperties(userDto, userModel);
         userDao.save(userModel);
     }
 
     @Override
-    public List<UserDTO> getAllUsers() {
+    public List<UserDto> getAllUsers() {
         List<UserModel> userModels = userDao.getAllUsers();
         return userModels.stream()
                 .map(this::convertUserDto)
                 .collect(Collectors.toList());
     }
 
-    private UserDTO convertUserDto(UserModel userModel) {
-        UserDTO userDTO = new UserDTO();
-        BeanUtils.copyProperties(userModel, userDTO);
-        return userDTO;
+    private UserDto convertUserDto(UserModel userModel) {
+        UserDto userDto = new UserDto();
+        BeanUtils.copyProperties(userModel, userDto);
+        return userDto;
     }
 
     @Override
@@ -43,16 +44,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getUserById(Integer id) {
-        UserDTO userDTO = new UserDTO();
-        BeanUtils.copyProperties(userDao.getById(id), userDTO);
-        return userDTO;
+    public UserDto getUserById(Integer id) {
+        UserDto userDto = new UserDto();
+        BeanUtils.copyProperties(userDao.getById(id), userDto);
+        return userDto;
     }
 
     @Override
-    public UserDTO getUserByEmail(String email) {
-        UserDTO userDTO = new UserDTO();
-        BeanUtils.copyProperties(userDao.getByEmail(email), userDTO);
-        return userDTO;
+    public UserDto getUserByEmail(String email) {
+        UserDto userDto = new UserDto();
+        BeanUtils.copyProperties(userDao.getByEmail(email), userDto);
+        return userDto;
     }
 }

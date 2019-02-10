@@ -1,6 +1,6 @@
 package com.epam.controller;
 
-import com.epam.dto.UserDTO;
+import com.epam.dto.UserDto;
 import com.epam.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,8 +20,8 @@ public class PdfController {
 
     @GetMapping(value = "/generate/{docName}")
     public String getDocuments(Model model, @PathVariable String docName) {
-        List<UserDTO> userDTOS = userService.getAllUsers();
-        model.addAttribute("usersPdf", userDTOS);
+        List<UserDto> userDtos = userService.getAllUsers();
+        model.addAttribute("usersPdf", userDtos);
         return "pdfUsers";
     }
 }

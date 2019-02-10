@@ -1,5 +1,6 @@
-package com.epam.dao;
+package com.epam.dao.impl;
 
+import com.epam.dao.UserDao;
 import com.epam.helper.UserHelper;
 import com.epam.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
