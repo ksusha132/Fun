@@ -1,13 +1,15 @@
-package com.epam.pdfService;
+package com.epam.viewResolver;
 
 import com.epam.dto.UserDTO;
 import com.lowagie.text.Document;
+import com.lowagie.text.Element;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import org.springframework.web.servlet.view.document.AbstractPdfView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.*;
 import java.text.DateFormat;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +26,11 @@ public class LowagiePdfView extends AbstractPdfView {
         List<UserDTO> users = (List<UserDTO>) model.get("usersPdf");
 
         PdfPTable table = new PdfPTable(3);
-        table.setWidths(new int[]{10, 60, 30});
+
+        table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
+        table.getDefaultCell().setBackgroundColor(Color.lightGray);
+
         table.addCell("Name");
         table.addCell("Email");
         table.addCell("Birthday");

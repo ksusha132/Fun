@@ -1,22 +1,59 @@
 package com.epam.config;
 
-import com.epam.pdfService.LowagiePdfView;
+import com.epam.viewResolver.JsonViewResolver;
+import com.epam.viewResolver.PdfViewResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
+import org.springframework.web.accept.ContentNegotiationManager;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
-import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 @EnableWebMvc
 @ComponentScan("com.epam")
 public class WebConfig extends WebMvcConfigurerAdapter {
+
+    @Override
+    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+        configurer.ignoreAcceptHeader(true).defaultContentType(
+                MediaType.TEXT_HTML);
+    }
+
+    @Bean
+    public ViewResolver contentNegotiatingViewResolver(ContentNegotiationManager manager) {
+        ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
+        resolver.setContentNegotiationManager(manager);
+
+        List<ViewResolver> resolvers = new ArrayList<>();
+
+        resolvers.add(jsonViewResolver());
+        resolvers.add(freeMarkerViewResolver()); // by default
+        resolvers.add(pdfViewResolver());
+
+        resolver.setViewResolvers(resolvers);
+        return resolver;
+    }
+
+    @Bean
+    public ViewResolver jsonViewResolver() {
+        return new JsonViewResolver();
+    }
+
+    @Bean
+    public ViewResolver pdfViewResolver() {
+        return new PdfViewResolver();
+    }
+
     @Bean
     public FreeMarkerConfigurer freemarkerConfig() {
 
@@ -28,34 +65,15 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public FreeMarkerViewResolver viewResolver() {
+    public FreeMarkerViewResolver freeMarkerViewResolver() {
 
         FreeMarkerViewResolver viewResolver = new FreeMarkerViewResolver();
         viewResolver.setSuffix(".ftl");
         viewResolver.setCache(false);
         viewResolver.setContentType("text/html;charset=UTF-8");
-        viewResolver.setOrder(0);
 
         return viewResolver;
     }
 
-    @Override
-    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-        configurer
-                .defaultContentType(org.springframework.http.MediaType.valueOf(MediaType.TEXT_HTML))
-                .parameterName("type")
-                .favorParameter(true)
-                .ignoreUnknownPathExtensions(false)
-                .ignoreAcceptHeader(false)
-                .useJaf(true);
-    }
 
-    @Override
-    public void configureViewResolvers(ViewResolverRegistry registry) {
-        registry.order(1);
-        registry.freeMarker().viewNames("pdfUsers");
-        registry.enableContentNegotiation(
-                new LowagiePdfView()
-        );
-    }
 }
