@@ -23,21 +23,21 @@ public class EventModel {
     private String auditoriumString;
 
     private NavigableSet<LocalDateTime> airDates = new TreeSet<>();
-    private NavigableMap<LocalDateTime, Auditorium> auditoriums = new TreeMap<>();
+    private NavigableMap<LocalDateTime, AuditoriumModel> auditoriums = new TreeMap<>();
 
 
     /**
      * Checks if event is aired on particular <code>dateTime</code> and assigns
-     * auditorium to it.
+     * auditoriumModel to it.
      *
      * @param dateTime   Date and time of aired event for which to assign
-     * @param auditorium Auditorium that should be assigned
+     * @param auditoriumModel AuditoriumModel that should be assigned
      * @return <code>true</code> if successful, <code>false</code> if event is
      * not aired on that date
      */
-    public boolean assignAuditorium(LocalDateTime dateTime, Auditorium auditorium) {
+    public boolean assignAuditorium(LocalDateTime dateTime, AuditoriumModel auditoriumModel) {
         if (airDates.contains(dateTime)) {
-            auditoriums.put(dateTime, auditorium);
+            auditoriums.put(dateTime, auditoriumModel);
             return true;
         } else {
             return false;
@@ -67,17 +67,17 @@ public class EventModel {
     }
 
     /**
-     * Adding date and time of event air and assigning auditorium to that
+     * Adding date and time of event air and assigning auditoriumModel to that
      *
      * @param dateTime   Date and time to add
-     * @param auditorium Auditorium to add if success in date time add
+     * @param auditoriumModel AuditoriumModel to add if success in date time add
      * @return <code>true</code> if successful, <code>false</code> if already
      * there
      */
-    public boolean addAirDateTime(LocalDateTime dateTime, Auditorium auditorium) {
+    public boolean addAirDateTime(LocalDateTime dateTime, AuditoriumModel auditoriumModel) {
         boolean result = airDates.add(dateTime);
         if (result) {
-            auditoriums.put(dateTime, auditorium);
+            auditoriums.put(dateTime, auditoriumModel);
         }
         return result;
     }

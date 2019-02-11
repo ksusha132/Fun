@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 @Configuration
 @ComponentScan("com.epam")
 public class AppConfig {
+
     @Bean
     public DataSource myPostgresSqlDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();

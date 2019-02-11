@@ -1,18 +1,19 @@
 package com.epam.model;
 
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
-@EqualsAndHashCode
 @AllArgsConstructor
 public class BookedTicketModel {
-    LocalDateTime time;
-    Integer seat;
-    private EventModel eventModel;
+    private Integer idEvent;
+    private Double price;
+    private Date dateAndTimeEvent;
+    private String auditoriumName;
+    private Integer seat;
+
 }

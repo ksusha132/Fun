@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @RequestMapping(value = "/getUsers", method = RequestMethod.GET)
     public ModelAndView getAllUsers(ModelAndView modelAndView) {

@@ -5,14 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Set;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Auditorium {
+public class AuditoriumModel {
     private String name;
     private Integer numberOfSeats;
-    private Set<Integer> vipSeats;
+    private String vipSeats;
+    private String seats;
 }
