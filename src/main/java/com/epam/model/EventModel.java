@@ -1,6 +1,5 @@
 package com.epam.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +12,6 @@ import java.util.TreeSet;
 
 @Getter
 @Setter
-@AllArgsConstructor
 public class EventModel {
     private Long id;
     private String name;

@@ -2,6 +2,7 @@ package com.epam.service.impl;
 
 import com.epam.dao.EventDao;
 import com.epam.dto.EventDto;
+import com.epam.model.EventModel;
 import com.epam.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,13 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public void save(EventDto eventDto) {
-
+        EventModel eventModel = new EventModel();
+        eventModel.setName(eventDto.getName());
+        eventModel.setRating(eventDto.getRating());
+        eventModel.setAuditoriumName(eventDto.getAuditoriumName());
+        eventModel.setBasePrice(eventDto.getBasePrice());
+        eventModel.setAuditoriumString(eventDto.getDatesEvent());
+        eventDao.saveEvent(eventModel);
     }
 
     @Override

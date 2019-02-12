@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -12,6 +14,5 @@ import lombok.Setter;
 public class AuditoriumModel {
     private String name;
     private Integer numberOfSeats;
-    private String vipSeats;
-    private String seats;
+    private List<Integer> vipSeats;
 }

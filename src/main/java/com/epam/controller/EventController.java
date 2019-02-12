@@ -30,13 +30,16 @@ public class EventController {
     }
 
     @PostMapping(value = "/create")
-    public ModelAndView registerUser(@RequestParam String name, @RequestParam String email,
-                                     @RequestParam String birthday, ModelAndView modelAndView) {
-        EventDto eventDto = new EventDto(); // list dates
-
-        //to do function for creating list of dates
-
-
+    public ModelAndView registerUser(@RequestParam String name, @RequestParam String rating,
+                                     @RequestParam Double basePrice, @RequestParam String auditName,
+                                     @RequestParam String dates, ModelAndView modelAndView) {
+        EventDto eventDto = new EventDto();
+        eventDto.setName(name);
+        eventDto.setBasePrice(basePrice);
+        eventDto.setRating(rating);
+        eventDto.setAuditoriumName(auditName);
+        eventDto.setDatesEvent(dates);
+        eventService.save(eventDto); // list
         modelAndView.setViewName("events");
         return modelAndView;
     }
