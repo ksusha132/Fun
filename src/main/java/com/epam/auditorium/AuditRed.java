@@ -18,10 +18,10 @@ public class AuditRed {
 
     @Autowired
     public AuditRed(@Value("${red.name}") String name,
-                    @Value("${red.numberOfSeats}") String numberOfSeats,
+                    @Value("${red.numberOfSeats}") Integer numberOfSeats,
                     @Value("${red.vipSeats}") String vipSeats) {
         this.name = name;
-        this.numberOfSeats = Integer.parseInt(numberOfSeats);
+        this.numberOfSeats = numberOfSeats;
         AuditHelper.vipseatParser(vipSeats, this.vipSeatsPared);
     }
 }

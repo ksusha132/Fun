@@ -17,5 +17,4 @@ public interface EventDao {
     EventModel getByName(String name);
 
     List<EventModel> getForDates(Date from, Date to);
-
 }

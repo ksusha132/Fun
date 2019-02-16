@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,6 +33,12 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
     }
 
+    private UserDto getBy(Object o, Function<Object, UserModel> getValueFromDao) {
+        UserDto userDto = new UserDto();
+        BeanUtils.copyProperties(getValueFromDao.apply(o), userDto);
+        return userDto;
+    }
+
     private UserDto convertUserDto(UserModel userModel) {
         UserDto userDto = new UserDto();
         BeanUtils.copyProperties(userModel, userDto);
@@ -45,15 +52,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUserById(Integer id) {
-        UserDto userDto = new UserDto();
-        BeanUtils.copyProperties(userDao.getById(id), userDto);
-        return userDto;
+        return getBy(id, appliedValue -> userDao.getById((Integer) appliedValue));
     }
 
     @Override
     public UserDto getUserByEmail(String email) {
-        UserDto userDto = new UserDto();
-        BeanUtils.copyProperties(userDao.getByEmail(email), userDto);
-        return userDto;
+        return getBy(email, appliedValue -> userDao.getByEmail((String) appliedValue));
     }
 }
