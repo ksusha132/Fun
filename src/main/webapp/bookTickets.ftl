@@ -10,6 +10,7 @@
     Seat number: <input type="text" name="seat"><br>
     Price: <input type="text" name="price"><br>
     Paid: <input type="checkbox" name="paid"><br>
+    Id user: <input type="text" name="idUser"><br>
     <input type="submit" value="Submit">
 </form>
 </body>

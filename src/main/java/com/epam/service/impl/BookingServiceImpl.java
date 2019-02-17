@@ -62,13 +62,26 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public List<BookTicketDto> getPurchasedTicketsForEvent(String event, LocalDateTime dateTime) {
         List<BookTicketModel> bookTicketModels = ticketDao.getPurchTicketsForEvent(event, dateTime);
+        return collectBookedTickets(bookTicketModels);
+    }
+
+    @Override
+    public List<BookTicketDto> getUsersTickets(Integer idUser, String event, LocalDateTime dateTime) {
+        List<BookTicketModel> bookTicketModels = ticketDao.getUsersTickets(idUser, event, dateTime);
+        return collectBookedTickets(bookTicketModels);
+    }
+
+    private List<BookTicketDto> collectBookedTickets(List<BookTicketModel> bookTicketModels) {
         return bookTicketModels.stream()
                 .filter(BookTicketModel::getPaid)
-                .map(bookTicketModel -> {
-                    BookTicketDto bookTicketDto = new BookTicketDto();
-                    BeanUtils.copyProperties(bookTicketModel, bookTicketDto);
-                    return bookTicketDto;
-                }).collect(Collectors.toList());
+                .map(this::getBookTicketDto)
+                .collect(Collectors.toList());
+    }
+
+    private BookTicketDto getBookTicketDto(BookTicketModel bookTicketModel) {
+        BookTicketDto bookTicketDto = new BookTicketDto();
+        BeanUtils.copyProperties(bookTicketModel, bookTicketDto);
+        return bookTicketDto;
     }
 }
 

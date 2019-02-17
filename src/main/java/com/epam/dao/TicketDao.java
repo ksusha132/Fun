@@ -11,4 +11,6 @@ public interface TicketDao {
     List<BookTicketModel> getPurchTicketsForEvent(String eventName, LocalDateTime dateTime);
 
     Integer getNumbersOfBookedTickets(String eventName, LocalDateTime dateTime);
+
+    List<BookTicketModel> getUsersTickets(Integer idUser, String event, LocalDateTime dateTime);
 }

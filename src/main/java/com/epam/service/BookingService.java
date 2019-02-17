@@ -14,4 +14,6 @@ public interface BookingService {
     List<BookTicketDto> getPurchasedTicketsForEvent(String event, LocalDateTime dateTime);
 
     Integer getNumbersOfBookedTickets(String event, LocalDateTime dateTime);
+
+    List<BookTicketDto> getUsersTickets(Integer idUser, String event, LocalDateTime dateTime);
 }

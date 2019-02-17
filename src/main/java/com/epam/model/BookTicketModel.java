@@ -13,4 +13,5 @@ public class BookTicketModel {
     private String eventName;
     private Double price;
     private Boolean paid;
+    private Integer idUser;
 }

@@ -46,8 +46,9 @@ public class EventDaoImpl implements EventDao {
 
     @Override
     public EventModel getByName(String name) {
-        String SQL = "SELECT * FROM event WHERE name = ?";
-        return jdbcTemplate.queryForObject(SQL, new Object[]{name}, new BeanPropertyRowMapper<>(EventModel.class));
+        String SQL = "SELECT * FROM event WHERE name = ? ";
+        List<EventModel> eventModels = jdbcTemplate.query(SQL, new Object[]{name}, new BeanPropertyRowMapper<>(EventModel.class));
+        return eventModels.stream().findFirst().get();
     }
 
     @Override

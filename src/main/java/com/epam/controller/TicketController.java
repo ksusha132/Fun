@@ -61,7 +61,7 @@ public class TicketController {
     @PostMapping(value = "/book")
     public ModelAndView bookTicket(@RequestParam String name, @RequestParam String dateTime,
                                    @RequestParam Integer seat, @RequestParam String price,
-                                   @RequestParam Boolean paid, ModelAndView modelAndView) {
+                                   @RequestParam Boolean paid, @RequestParam Integer idUser, ModelAndView modelAndView) {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
@@ -71,6 +71,7 @@ public class TicketController {
         bookTicketDto.setDateTime(LocalDateTime.parse(dateTime, formatter));
         bookTicketDto.setPrice(Double.valueOf(price));
         bookTicketDto.setPaid(paid);
+        bookTicketDto.setIdUser(idUser);
         bookingService.bookTickets(bookTicketDto);
         modelAndView.setViewName("index");
         return modelAndView;

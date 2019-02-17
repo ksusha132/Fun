@@ -19,9 +19,9 @@ public class BookTicketDaoImpl implements TicketDao {
 
     @Override
     public void bookTicket(BookTicketModel model) {
-        String qr = "INSERT INTO ticket (id, date_time, seat, event_name, price, paid) VALUES (?,?,?,?,?,?)";
+        String qr = "INSERT INTO ticket (id, date_time, seat, event_name, price, paid, id_user) VALUES (?,?,?,?,?,?,?)";
         jdbcTemplate.update(qr, UtilHelper.createID(), Timestamp.valueOf(model.getDateTime()),
-                model.getSeat(), model.getEventName(), model.getPrice(), model.getPaid());
+                model.getSeat(), model.getEventName(), model.getPrice(), model.getPaid(), model.getIdUser());
     }
 
     @Override
@@ -34,5 +34,11 @@ public class BookTicketDaoImpl implements TicketDao {
     public Integer getNumbersOfBookedTickets(String eventName, LocalDateTime dateTime) {
         String SQL = "SELECT COUNT (*) FROM ticket WHERE event_name = ? AND date_time = ?";
         return jdbcTemplate.queryForObject(SQL, new Object[]{eventName, Timestamp.valueOf(dateTime)}, Integer.class);
+    }
+
+    @Override
+    public List<BookTicketModel> getUsersTickets(Integer idUser, String event, LocalDateTime dateTime) {
+        String SQL = "SELECT * FROM ticket WHERE id_user = ? AND event_name = ? AND date_time = ?";
+        return jdbcTemplate.query(SQL, new Object[]{idUser, event, Timestamp.valueOf(dateTime)}, new BeanPropertyRowMapper<>(BookTicketModel.class));
     }
 }
