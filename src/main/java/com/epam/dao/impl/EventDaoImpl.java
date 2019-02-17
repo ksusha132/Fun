@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class EventDaoImpl implements EventDao {
 
         String qr = "INSERT INTO event (id, name, rating, base_price, dates_event, auditorium_name) VALUES (?,?,?,?,?,?)";
         jdbcTemplate.update(qr, UtilHelper.createID(), eventModel.getName(), eventModel.getRating(), eventModel.getBasePrice(),
-                eventModel.getDatesEvent(), eventModel.getAuditoriumName());
+                Timestamp.valueOf(eventModel.getDatesEvent()), eventModel.getAuditoriumName());
     }
 
     @Override

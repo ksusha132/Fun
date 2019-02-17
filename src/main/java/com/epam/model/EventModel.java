@@ -18,7 +18,7 @@ public class EventModel {
     private String rating;
     private double basePrice;
     private String auditoriumName;
-    private String datesEvent;
+    private LocalDateTime datesEvent;
 
     private NavigableSet<LocalDateTime> airDates = new TreeSet<>();
     private NavigableMap<LocalDateTime, AuditoriumModel> auditoriums = new TreeMap<>();

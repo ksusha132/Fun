@@ -1,16 +1,16 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ksusha
-  Date: 17.02.2019
-  Time: 1:40
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
 <head>
-    <title>Title</title>
+    <title>Book ticket</title>
 </head>
 <body>
-
+<form action="/ticket/book" method="post">
+    Event name: <input type="text" name="name"><br>
+    Date and time: <input type="text" name="dateTime"><br>
+    Seat number: <input type="text" name="seat"><br>
+    Price: <input type="text" name="price"><br>
+    Paid: <input type="checkbox" name="paid"><br>
+    <input type="submit" value="Submit">
+</form>
 </body>
 </html>

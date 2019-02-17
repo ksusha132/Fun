@@ -9,6 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Controller
 @RequestMapping(value = "/event")
 public class EventController {
@@ -35,12 +38,13 @@ public class EventController {
     public ModelAndView registerUser(@RequestParam String name, @RequestParam String rating,
                                      @RequestParam String basePrice, @RequestParam String auditName,
                                      @RequestParam String dates, ModelAndView modelAndView) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         EventDto eventDto = new EventDto();
         eventDto.setName(name);
         eventDto.setRating(rating);
         eventDto.setBasePrice(Double.parseDouble(basePrice));
         eventDto.setAuditoriumName(auditName);
-        eventDto.setDatesEvent(dates);
+        eventDto.setDatesEvent(LocalDateTime.parse(dates, formatter));
         eventService.save(eventDto);
         modelAndView.setViewName("index");
         return modelAndView;
