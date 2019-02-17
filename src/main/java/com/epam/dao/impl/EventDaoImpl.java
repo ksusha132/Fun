@@ -1,6 +1,7 @@
 package com.epam.dao.impl;
 
 import com.epam.dao.EventDao;
+import com.epam.helper.UtilHelper;
 import com.epam.model.EventModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -19,9 +20,9 @@ public class EventDaoImpl implements EventDao {
     @Override
     public void saveEvent(EventModel eventModel) {
 
-        String qr = "INSERT INTO event (id, name, rating, base_price, date_time, auditorium) VALUES (?,?,?,?,?,?)";
-        jdbcTemplate.update(qr, eventModel.getId(), eventModel.getName(), eventModel.getRating(), eventModel.getBasePrice(),
-                eventModel.getDatesString(), eventModel.getAuditoriumName());
+        String qr = "INSERT INTO event (id, name, rating, base_price, dates_event, auditorium_name) VALUES (?,?,?,?,?,?)";
+        jdbcTemplate.update(qr, UtilHelper.createID(), eventModel.getName(), eventModel.getRating(), eventModel.getBasePrice(),
+                eventModel.getDatesEvent(), eventModel.getAuditoriumName());
     }
 
     @Override
@@ -32,19 +33,20 @@ public class EventDaoImpl implements EventDao {
 
     @Override
     public List<EventModel> getAllEvents() {
-        return null;
+        String SQL = "SELECT * FROM event";
+        return jdbcTemplate.query(SQL, new BeanPropertyRowMapper<>(EventModel.class));
     }
 
     @Override
     public EventModel getById(Integer id) {
         String SQL = "SELECT * FROM event WHERE id = ?";
-        return jdbcTemplate.queryForObject(SQL, new BeanPropertyRowMapper<>(EventModel.class));
+        return jdbcTemplate.queryForObject(SQL, new Object[]{id}, new BeanPropertyRowMapper<>(EventModel.class));
     }
 
     @Override
     public EventModel getByName(String name) {
         String SQL = "SELECT * FROM event WHERE name = ?";
-        return jdbcTemplate.queryForObject(SQL, new BeanPropertyRowMapper<>(EventModel.class));
+        return jdbcTemplate.queryForObject(SQL, new Object[]{name}, new BeanPropertyRowMapper<>(EventModel.class));
     }
 
     @Override

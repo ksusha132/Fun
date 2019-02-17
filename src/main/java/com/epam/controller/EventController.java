@@ -3,6 +3,7 @@ package com.epam.controller;
 import com.epam.dto.EventDto;
 import com.epam.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Description;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,36 +16,38 @@ public class EventController {
     private EventService eventService;
 
 
-    @RequestMapping(value = "/getEvents", method = RequestMethod.GET)
-    public ModelAndView getAllUsers(ModelAndView modelAndView) {
-        modelAndView.addObject("events", eventService.getAllEvents());
+    @GetMapping(value = "/getEvents")
+    public ModelAndView getAllEvents(ModelAndView modelAndView) {
+        modelAndView.addObject("eventObjects", eventService.getAllEvents());
         modelAndView.setViewName("events");
         return modelAndView;
     }
 
     @GetMapping(value = "/create")
-    public ModelAndView registerUser() {
+    public ModelAndView createEvent() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("createEvent");
+        modelAndView.setViewName("eventCreate");
         return modelAndView;
     }
 
     @PostMapping(value = "/create")
+    @Description("only for admins")
     public ModelAndView registerUser(@RequestParam String name, @RequestParam String rating,
-                                     @RequestParam Double basePrice, @RequestParam String auditName,
+                                     @RequestParam String basePrice, @RequestParam String auditName,
                                      @RequestParam String dates, ModelAndView modelAndView) {
         EventDto eventDto = new EventDto();
         eventDto.setName(name);
-        eventDto.setBasePrice(basePrice);
         eventDto.setRating(rating);
+        eventDto.setBasePrice(Double.parseDouble(basePrice));
         eventDto.setAuditoriumName(auditName);
         eventDto.setDatesEvent(dates);
-        eventService.save(eventDto); // list
-        modelAndView.setViewName("events");
+        eventService.save(eventDto);
+        modelAndView.setViewName("index");
         return modelAndView;
     }
 
     @GetMapping(value = "/delete/{id}")
+    @Description("only for admins")
     public ModelAndView deleteUser(@PathVariable Integer id) {
         eventService.remove(id);
         ModelAndView modelAndView = new ModelAndView();
@@ -53,10 +56,11 @@ public class EventController {
     }
 
     @GetMapping(value = "/getEvent/{id}")
+    @Description("only for admins")
     public ModelAndView getUser(@PathVariable Integer id) throws EmptyResultDataAccessException {
         ModelAndView modelAndView = new ModelAndView();
         EventDto eventDto = eventService.getById(id);
-        modelAndView.addObject("event", eventDto);
+        modelAndView.addObject("eventObject", eventDto);
         modelAndView.setViewName("event");
         return modelAndView;
     }
@@ -64,7 +68,7 @@ public class EventController {
     @GetMapping(value = "/getEventByName/{name}")
     public ModelAndView getUser(@PathVariable("name") String name) throws EmptyResultDataAccessException {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("event", eventService.getByName(name));
+        modelAndView.addObject("eventObject", eventService.getByName(name));
         modelAndView.setViewName("event");
         return modelAndView;
     }

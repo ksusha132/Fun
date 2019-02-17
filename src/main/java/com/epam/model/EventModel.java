@@ -13,12 +13,12 @@ import java.util.TreeSet;
 @Getter
 @Setter
 public class EventModel {
-    private Long id;
+    private Integer id;
     private String name;
     private String rating;
     private double basePrice;
     private String auditoriumName;
-    private String datesString;
+    private String datesEvent;
 
     private NavigableSet<LocalDateTime> airDates = new TreeSet<>();
     private NavigableMap<LocalDateTime, AuditoriumModel> auditoriums = new TreeMap<>();
