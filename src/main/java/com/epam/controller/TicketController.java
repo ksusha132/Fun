@@ -5,10 +5,7 @@ import com.epam.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
@@ -24,24 +21,31 @@ public class TicketController {
     @GetMapping(value = "/getPrice")
     public ModelAndView getTickets() throws EmptyResultDataAccessException {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("ticketObjects");
         modelAndView.setViewName("tickets");
         return modelAndView;
     }
 
-    @GetMapping(value = "/purchasedTickets")
-    public ModelAndView getPurchasedTickets() throws EmptyResultDataAccessException {
+    @GetMapping(value = "/purchasedTickets/{event}/{dateTime}")
+    public ModelAndView getPurchasedTickets(@PathVariable String event, @PathVariable String dateTime) throws EmptyResultDataAccessException {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"); //todo make it with AOP
+
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("ticketObjects");
+        modelAndView.addObject("ticketObjects",
+                bookingService.getPurchasedTicketsForEvent(event, LocalDateTime.parse(dateTime, formatter)));
         modelAndView.setViewName("tickets");
         return modelAndView;
     }
 
 
     @GetMapping(value = "/getNumberOfBookedTicked")
-    public ModelAndView getNumberBookedTicked() throws EmptyResultDataAccessException {
+    public ModelAndView getNumberBookedTicked(@RequestParam String event, @RequestParam String dateTime) throws EmptyResultDataAccessException {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("ticketObjects");
+        modelAndView.addObject("ticketInfo",
+                bookingService.getNumbersOfBookedTickets(event, LocalDateTime.parse(dateTime, formatter)));
         modelAndView.setViewName("tickets");
         return modelAndView;
     }
@@ -63,8 +67,8 @@ public class TicketController {
 
         BookTicketDto bookTicketDto = new BookTicketDto();
         bookTicketDto.setSeat(seat);
-        bookTicketDto.setEvent(name);
-        bookTicketDto.setTime(LocalDateTime.parse(dateTime, formatter));
+        bookTicketDto.setEventName(name);
+        bookTicketDto.setDateTime(LocalDateTime.parse(dateTime, formatter));
         bookTicketDto.setPrice(Double.valueOf(price));
         bookTicketDto.setPaid(paid);
         bookingService.bookTickets(bookTicketDto);

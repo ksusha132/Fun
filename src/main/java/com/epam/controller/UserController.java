@@ -17,7 +17,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/getUsers", method = RequestMethod.GET)
+    @GetMapping(value = "/getUsers")
     public ModelAndView getAllUsers(ModelAndView modelAndView) {
         modelAndView.addObject("userObjects", userService.getAllUsers());
         modelAndView.setViewName("users");

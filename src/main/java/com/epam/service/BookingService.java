@@ -1,18 +1,17 @@
 package com.epam.service;
 
 import com.epam.dto.BookTicketDto;
-import com.epam.dto.EventDto;
 import com.epam.dto.UserDto;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 
 public interface BookingService {
     Double getTicketsPrice(String event, LocalDateTime dateTime, UserDto user, String seats) throws Throwable;
 
     void bookTickets(BookTicketDto ticket);
 
-    Set<BookTicketDto> getPurchasedTicketsForEvent(EventDto event, LocalDateTime dateTime);
+    List<BookTicketDto> getPurchasedTicketsForEvent(String event, LocalDateTime dateTime);
 
-    Set<Integer> getNumbersOfBookedTickets(EventDto event, LocalDateTime dateTime);
+    Integer getNumbersOfBookedTickets(String event, LocalDateTime dateTime);
 }

@@ -8,9 +8,9 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class BookTicketDto {
-    private LocalDateTime time;
+    private LocalDateTime dateTime;
     private Integer seat;
-    private String event;
+    private String eventName;
     private Double price;
     private Boolean paid;
 }

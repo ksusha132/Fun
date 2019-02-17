@@ -1,16 +1,16 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ksusha
-  Date: 17.02.2019
-  Time: 13:46
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Tickets</title>
 </head>
 <body>
-
+<ul>
+    <#list ticketObjects as ticketObject>
+        <li>${ticketObject.eventName}</li>
+        <li>${ticketObject.price}</li>
+        <li>${ticketObject.seat}</li>
+        <li>${ticketObject.dateTime}</li>
+        <li>${ticketObject.paid?then('Y', 'N')}</li>
+    </#list>
+</ul>
 </body>
 </html>

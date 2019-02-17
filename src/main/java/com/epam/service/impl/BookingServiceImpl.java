@@ -14,7 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BookingServiceImpl implements BookingService {
@@ -47,8 +48,8 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Set<Integer> getNumbersOfBookedTickets(EventDto event, LocalDateTime dateTime) {
-        return null;
+    public Integer getNumbersOfBookedTickets(String event, LocalDateTime dateTime) {
+        return ticketDao.getNumbersOfBookedTickets(event, dateTime);
     }
 
     @Override
@@ -59,8 +60,15 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Set<BookTicketDto> getPurchasedTicketsForEvent(EventDto event, LocalDateTime dateTime) {
-        return null;
+    public List<BookTicketDto> getPurchasedTicketsForEvent(String event, LocalDateTime dateTime) {
+        List<BookTicketModel> bookTicketModels = ticketDao.getPurchTicketsForEvent(event, dateTime);
+        return bookTicketModels.stream()
+                .filter(BookTicketModel::getPaid)
+                .map(bookTicketModel -> {
+                    BookTicketDto bookTicketDto = new BookTicketDto();
+                    BeanUtils.copyProperties(bookTicketModel, bookTicketDto);
+                    return bookTicketDto;
+                }).collect(Collectors.toList());
     }
 }
 
