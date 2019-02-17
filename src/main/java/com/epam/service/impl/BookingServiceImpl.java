@@ -20,3 +20,9 @@ public class BookingServiceImpl implements BookingService {
         return null;
     }
 }
+
+//todo add AOP
+//todo add booking functional
+//todo create views for all and test it
+//todo watch videos and create loading script
+//todo think of storing dates

@@ -1,10 +1,10 @@
 package com.epam.discountStrategies;
 
-import com.epam.dto.EventDto;
-import com.epam.dto.UserDto;
+import com.epam.model.EventModel;
+import com.epam.model.UserModel;
 
 import java.time.LocalDateTime;
 
 public interface DiscountCounter {
-    Integer countDiscount(UserDto user, EventDto event, LocalDateTime airDateTime, Integer numberOfTickets);
+    Integer countDiscount(UserModel user, EventModel event, LocalDateTime airDateTime, Integer numberOfTickets);
 }

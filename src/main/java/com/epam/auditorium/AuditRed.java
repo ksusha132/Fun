@@ -22,6 +22,6 @@ public class AuditRed {
                     @Value("${red.vipSeats}") String vipSeats) {
         this.name = name;
         this.numberOfSeats = numberOfSeats;
-        AuditHelper.vipseatParser(vipSeats, this.vipSeatsPared);
+        AuditHelper.vipSeatParser(vipSeats, this.vipSeatsPared);
     }
 }

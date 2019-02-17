@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -14,7 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class UserDto {
     private String name;
-    private Date birthday;
+    private LocalDate birthday;
     private String email;
     private String role;
 }

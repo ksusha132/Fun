@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
+
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
@@ -35,7 +37,7 @@ public class UserController {
         UserDto userDto = new UserDto();
         userDto.setName(name);
         userDto.setEmail(email);
-        userDto.setBirthday(java.sql.Date.valueOf(birthday));
+        userDto.setBirthday(LocalDate.parse(birthday));
         userDto.setRole("USER_ROLE");
         userService.registerUser(userDto);
         modelAndView.setViewName("index");
