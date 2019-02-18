@@ -25,6 +25,16 @@ public class TicketController {
         return modelAndView;
     }
 
+    @GetMapping(value = "/getPriceWithDiscount/{event}/{dateTime}/{userEmail}/{seat}")
+    public ModelAndView getTicketsWithDiscount(@PathVariable String event, @PathVariable String dateTime,
+                                               @PathVariable String userEmail, @PathVariable Integer seat) throws Throwable {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        bookingService.getTicketPrice(event, LocalDateTime.parse(dateTime, formatter), userEmail, seat);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("tickets");
+        return modelAndView;
+    }
+
     @GetMapping(value = "/purchasedTickets/{event}/{dateTime}")
     public ModelAndView getPurchasedTickets(@PathVariable String event, @PathVariable String dateTime) throws EmptyResultDataAccessException {
 

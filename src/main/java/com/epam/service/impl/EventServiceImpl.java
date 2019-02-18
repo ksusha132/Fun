@@ -8,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
@@ -59,6 +60,12 @@ public class EventServiceImpl implements EventService {
         EventDto eventDto = new EventDto();
         BeanUtils.copyProperties(eventModel, eventDto);
         return eventDto;
+    }
+
+    @Override
+    public EventDto getByNameAddTime(String name, LocalDateTime dateTime) {
+        EventModel eventModel = eventDao.getByNameAndTime(name, dateTime);
+        return convertDto(eventModel);
     }
 
     @Override

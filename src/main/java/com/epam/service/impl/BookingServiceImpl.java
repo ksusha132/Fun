@@ -4,11 +4,9 @@ import com.epam.dao.TicketDao;
 import com.epam.dto.BookTicketDto;
 import com.epam.dto.EventDto;
 import com.epam.dto.UserDto;
+import com.epam.model.AuditoriumModel;
 import com.epam.model.BookTicketModel;
-import com.epam.service.AuditoriumService;
-import com.epam.service.BookingService;
-import com.epam.service.EventService;
-import com.epam.service.UserService;
+import com.epam.service.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,19 +30,46 @@ public class BookingServiceImpl implements BookingService {
     @Autowired
     private TicketDao ticketDao;
 
+    @Autowired
+    private DiscountService discountService;
+
     @Override
-    public Double getTicketsPrice(String event, LocalDateTime dateTime, UserDto user, String seats) throws Throwable {
-        UserDto userDto = userService.getUserByEmail(user.getEmail()); // or current user do it after security functional implemented
-        EventDto eventDto = eventService.getByName(event);
-        if (dateTime.equals(eventDto.getDatesEvent())) {
-            // if any seats left
-
-            //get base price
-            //get vip seats
-            //get price with discount if available
+    public Double getTicketPrice(String event, LocalDateTime dateTime, String user, Integer seat) throws Throwable {
+        UserDto userDto = userService.getUserByEmail(user);
+        EventDto eventDto = eventService.getByNameAddTime(event, dateTime);
+        AuditoriumModel auditoriumModel = auditoriumService.getByName(eventDto.getAuditoriumName()
+                .replace(" ", ""));
+        Double price = null;
+        if (isVipSeat(seat, auditoriumModel)) {
+            price = eventDto.getBasePrice() * 1.5 * getRaitCoff(eventDto);
+        } else {
+            price = eventDto.getBasePrice() * getRaitCoff(eventDto);
         }
+        return price - (price * getDiscount(userDto, eventDto, dateTime, seat));
+    }
 
-        return null;
+    private Boolean isVipSeat(Integer seat, AuditoriumModel auditoriumModel) {
+        return auditoriumModel.getVipSeats().contains(seat);
+    }
+
+    private Integer getDiscount(UserDto userDto, EventDto eventDto, LocalDateTime dateTime, Integer contSeats) {
+        return discountService.getDiscount(userDto, eventDto, dateTime, contSeats);
+    }
+
+    private Double getRaitCoff(EventDto eventDto) {
+        Double rait = null;
+        switch (eventDto.getRating()) {
+            case "high":
+                rait = 1.25;
+                break;
+            case "mid":
+                rait = 1.15;
+                break;
+            case "low":
+                rait = 1.0;
+                break;
+        }
+        return rait;
     }
 
     @Override
@@ -84,7 +109,6 @@ public class BookingServiceImpl implements BookingService {
         return bookTicketDto;
     }
 }
-
 //todo add AOP
 //todo create more kind of exceptions
 //todo watch videos

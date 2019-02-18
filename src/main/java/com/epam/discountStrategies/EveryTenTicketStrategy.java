@@ -1,7 +1,7 @@
 package com.epam.discountStrategies;
 
-import com.epam.model.EventModel;
-import com.epam.model.UserModel;
+import com.epam.dto.EventDto;
+import com.epam.dto.UserDto;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -12,7 +12,7 @@ public class EveryTenTicketStrategy implements DiscountCounter {
     // This strategy can also be applied for not-registered users if 10 or more tickets are bought
 
     @Override
-    public Integer countDiscount(UserModel user, EventModel event, LocalDateTime airDateTime, Integer numberOfTickets) {
+    public Integer countDiscount(UserDto user, EventDto event, LocalDateTime airDateTime, Integer numberOfTickets) {
         if (user != null || numberOfTickets > 10) {
             double price = event.getBasePrice();
             long discountTicket = numberOfTickets / 10;

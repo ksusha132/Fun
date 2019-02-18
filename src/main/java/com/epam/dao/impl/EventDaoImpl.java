@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -55,5 +56,11 @@ public class EventDaoImpl implements EventDao {
     public List<EventModel> getForDates(Date from, Date to) {
         String SQL = "SELECT * FROM event";
         return jdbcTemplate.query(SQL, new BeanPropertyRowMapper<>(EventModel.class));
+    }
+
+    @Override
+    public EventModel getByNameAndTime(String name, LocalDateTime dateTime) {
+        String SQL = "SELECT * FROM event WHERE name = ? AND dates_event = ?";
+        return jdbcTemplate.queryForObject(SQL, new Object[]{name, Timestamp.valueOf(dateTime)}, new BeanPropertyRowMapper<>(EventModel.class));
     }
 }

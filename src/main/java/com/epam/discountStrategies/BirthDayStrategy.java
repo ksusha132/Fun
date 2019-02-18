@@ -1,7 +1,7 @@
 package com.epam.discountStrategies;
 
-import com.epam.model.EventModel;
-import com.epam.model.UserModel;
+import com.epam.dto.EventDto;
+import com.epam.dto.UserDto;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -13,11 +13,11 @@ public class BirthDayStrategy implements DiscountCounter {
     //Birthday strategy - give 7% if user has birthday within 5 days of air date
 
     @Override
-    public Integer countDiscount(UserModel user, EventModel event, LocalDateTime airDateTime, Integer numberOfTickets) {
+    public Integer countDiscount(UserDto user, EventDto event, LocalDateTime airDateTime, Integer numberOfTickets) {
         return isDiscountAvailable(airDateTime, user) ? 7 : 0;
     }
 
-    private Boolean isDiscountAvailable(LocalDateTime airDateTime, UserModel user) {
+    private Boolean isDiscountAvailable(LocalDateTime airDateTime, UserDto user) {
         if (user == null) {
             return false;
         }

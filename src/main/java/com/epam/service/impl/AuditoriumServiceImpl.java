@@ -25,13 +25,13 @@ public class AuditoriumServiceImpl implements AuditoriumService {
     public AuditoriumModel getByName(String name) {
         AuditoriumModel auditoriumModel = new AuditoriumModel();
         switch (name) {
-            case ("green"):
+            case ("greenStage"):
                 BeanUtils.copyProperties(auditGreen, auditoriumModel);
                 break;
-            case ("blue"):
+            case ("blueStage"):
                 BeanUtils.copyProperties(auditBlue, auditoriumModel);
                 break;
-            case ("red"):
+            case ("redStage"):
                 BeanUtils.copyProperties(auditRed, auditoriumModel);
                 break;
         }
