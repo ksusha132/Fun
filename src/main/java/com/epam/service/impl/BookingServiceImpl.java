@@ -58,7 +58,7 @@ public class BookingServiceImpl implements BookingService {
 
     private Double getRaitCoff(EventDto eventDto) {
         Double rait = null;
-        switch (eventDto.getRating()) {
+        switch (eventDto.getRating().replaceAll(" ", "")) {
             case "high":
                 rait = 1.25;
                 break;

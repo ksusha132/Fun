@@ -1,26 +1,25 @@
 package com.epam.auditorium;
 
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@Configuration
 @Getter
 public class AuditBlue {
+    @Value("#{'${blue.name}'}")
     private String name;
+    @Value("#{'${blue.numberOfSeats}'}")
     private Integer numberOfSeats;
-    private List<Integer> vipSeatsPared = new ArrayList<>();
+    @Value("#{'${blue.vipSeats}'.split(',')}")
+    private List<Integer> vipSeats;
 
-    @Autowired
-    public AuditBlue(@Value("${blue.name}") String name,
-                     @Value("${blue.numberOfSeats}") String numberOfSeats,
-                     @Value("${blue.vipSeats}") String vipSeats) {
-        this.name = name;
-        this.numberOfSeats = Integer.parseInt(numberOfSeats);
-        AuditHelper.vipSeatParser(vipSeats, this.vipSeatsPared);
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {
+        return new PropertySourcesPlaceholderConfigurer();
     }
 }
