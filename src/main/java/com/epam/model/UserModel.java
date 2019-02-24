@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -15,7 +15,7 @@ public class UserModel {
     private Integer id;
     private String name;
     private String email;
-    private Date birthday;
+    private LocalDate birthday;
     private String role;
 
 }

@@ -1,6 +1,6 @@
 package com.epam.controller;
 
-import com.epam.dto.UserDTO;
+import com.epam.dto.UserDto;
 import com.epam.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -8,14 +8,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
+
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
-    @RequestMapping(value = "/getUsers", method = RequestMethod.GET)
+    @GetMapping(value = "/getUsers")
     public ModelAndView getAllUsers(ModelAndView modelAndView) {
         modelAndView.addObject("userObjects", userService.getAllUsers());
         modelAndView.setViewName("users");
@@ -25,19 +27,19 @@ public class UserController {
     @GetMapping(value = "/register")
     public ModelAndView registerUser() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("registerUser");
+        modelAndView.setViewName("userRegister");
         return modelAndView;
     }
 
     @PostMapping(value = "/register")
     public ModelAndView registerUser(@RequestParam String name, @RequestParam String email,
                                      @RequestParam String birthday, ModelAndView modelAndView) {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setName(name);
-        userDTO.setEmail(email);
-        userDTO.setBirthday(java.sql.Date.valueOf(birthday));
-        userDTO.setRole("USER_ROLE");
-        userService.registerUser(userDTO);
+        UserDto userDto = new UserDto();
+        userDto.setName(name);
+        userDto.setEmail(email);
+        userDto.setBirthday(LocalDate.parse(birthday));
+        userDto.setRole("USER_ROLE");
+        userService.registerUser(userDto);
         modelAndView.setViewName("index");
         return modelAndView;
     }
@@ -54,8 +56,8 @@ public class UserController {
     @GetMapping(value = "/getUser/{id}")
     public ModelAndView getUser(@PathVariable Integer id) throws EmptyResultDataAccessException {
         ModelAndView modelAndView = new ModelAndView();
-        UserDTO userDTO = userService.getUserById(id);
-        modelAndView.addObject("user", userDTO);
+        UserDto userDto = userService.getUserById(id);
+        modelAndView.addObject("user", userDto);
         modelAndView.setViewName("user");
         return modelAndView;
     }

@@ -1,6 +1,7 @@
-package com.epam.dao;
+package com.epam.dao.impl;
 
-import com.epam.helper.UserHelper;
+import com.epam.dao.UserDao;
+import com.epam.helper.UtilHelper;
 import com.epam.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -18,7 +19,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void save(UserModel user) {
         String qr = "INSERT INTO person (id, name, email, birthday, role) VALUES (?,?,?,?,?)";
-        jdbcTemplate.update(qr, UserHelper.createID(), user.getName(), user.getEmail(), user.getBirthday(), user.getRole());
+        jdbcTemplate.update(qr, UtilHelper.createID(), user.getName(), user.getEmail(), user.getBirthday(), user.getRole());
     }
 
     @Override
@@ -36,12 +37,12 @@ public class UserDaoImpl implements UserDao {
     @Override
     public UserModel getById(Integer id) {
         String SQL = "SELECT * FROM person WHERE id = ?";
-        return (UserModel) jdbcTemplate.queryForObject(SQL, new Object[]{id}, new BeanPropertyRowMapper<>(UserModel.class));
+        return jdbcTemplate.queryForObject(SQL, new Object[]{id}, new BeanPropertyRowMapper<>(UserModel.class));
     }
 
     @Override
     public UserModel getByEmail(String email) {
         String SQL = "SELECT * FROM person WHERE email = ?";
-        return (UserModel) jdbcTemplate.queryForObject(SQL, new Object[]{email}, new BeanPropertyRowMapper<>(UserModel.class));
+        return jdbcTemplate.queryForObject(SQL, new Object[]{email}, new BeanPropertyRowMapper<>(UserModel.class));
     }
 }

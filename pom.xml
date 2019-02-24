@@ -23,6 +23,7 @@
         <jacsonAnnotation.version>2.4.1</jacsonAnnotation.version>
         <jacsonBind.version>2.4.1.3</jacsonBind.version>
         <javaServlet.version>3.1.0</javaServlet.version>
+        <aspectJ.version>1.9.2</aspectJ.version>
     </properties>
 
     <dependencies>
@@ -92,6 +93,11 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
             <version>${jacsonCore.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectJ.version}</version>
         </dependency>
     </dependencies>
     <build>

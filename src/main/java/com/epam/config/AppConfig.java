@@ -1,8 +1,6 @@
 package com.epam.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.*;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
@@ -10,7 +8,14 @@ import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan("com.epam")
+@EnableAspectJAutoProxy
+@PropertySources({
+        @PropertySource("classpath:auditoriumRed.properties"),
+        @PropertySource("classpath:auditoriumGreen.properties"),
+        @PropertySource("classpath:auditoriumBlue.properties")
+})
 public class AppConfig {
+
     @Bean
     public DataSource myPostgresSqlDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
