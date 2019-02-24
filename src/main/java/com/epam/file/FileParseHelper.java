@@ -27,31 +27,43 @@ public class FileParseHelper {
 
     public static void usersSaver(JSONArray jsonArray) {
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         for (Object aJsonArray : jsonArray) {
             UserDto userDto = new UserDto();
+
             userDto.setName((String) ((JSONObject) aJsonArray).get("name"));
             userDto.setEmail((String) ((JSONObject) aJsonArray).get("email"));
             userDto.setRole((String) ((JSONObject) aJsonArray).get("role"));
+
             String birthday = String.valueOf(((JSONObject) aJsonArray).get("birthday"));
+
             userDto.setBirthday(LocalDate.parse(birthday, formatter));
-            System.out.println(userDto);
+
             userService.registerUser(userDto);
         }
     }
 
     public static void parseEvents(JSONArray jsonArray) {
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         for (Object aJsonArray : jsonArray) {
+
             EventDto eventDto = new EventDto();
+
             eventDto.setName((String) ((JSONObject) aJsonArray).get("name"));
             eventDto.setRating((String) ((JSONObject) aJsonArray).get("rating"));
-            eventDto.setBasePrice((Double) ((JSONObject) aJsonArray).get("basePrice"));
+            String basePrice = (String) ((JSONObject) aJsonArray).get("basePrice");
+
+            eventDto.setBasePrice(Double.parseDouble(basePrice));
+
             eventDto.setAuditoriumName((String) ((JSONObject) aJsonArray).get("auditoriumName"));
+
             String datesEvent = String.valueOf(((JSONObject) aJsonArray).get("datesEvent"));
+
             eventDto.setDatesEvent(LocalDateTime.parse(datesEvent, formatter));
+
             eventService.save(eventDto);
         }
     }

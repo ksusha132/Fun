@@ -1,20 +1,20 @@
 {
   "Users": [
     {
-      "name": "Inan",
-      "birthday": "2000-01-25 21:34",
+      "name": "Ivan",
+      "birthday": "1991-01-25",
       "email": "ivan@mail.test",
       "role": "USER_ROLE"
     },
     {
       "name": "Victor",
-      "birthday": "1993-02-25 21:34",
+      "birthday": "1993-02-25",
       "email": "victor@mail.test",
       "role": "USER_ROLE"
     },
     {
-      "name": "Alexandr",
-      "birthday": "1993-02-11 21:34",
+      "name": "Alexander",
+      "birthday": "1993-02-11",
       "email": "alexander@mail.test",
       "role": "USER_ROLE"
     }
@@ -23,21 +23,21 @@
     {
       "name": "Equalizer",
       "rating": "high",
-      "basePrice": 200,
+      "basePrice": "200",
       "auditoriumName": "redStage",
       "datesEvent": "2019-01-25 16:00"
     },
     {
       "name": "Equalizer",
       "rating": "high",
-      "basePrice": 200,
+      "basePrice": "200",
       "auditoriumName": "redStage",
       "datesEvent": "2019-01-22 18:00"
     },
     {
-      "name": "InaEqualizern",
+      "name": "Equalizer",
       "rating": "high",
-      "basePrice": 200,
+      "basePrice": "200",
       "auditoriumName": "redStage",
       "datesEvent": "2019-01-22 20:00"
     }
