@@ -31,6 +31,7 @@ public class AppConfig {
     public JdbcTemplate jdbcTemplate() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         jdbcTemplate.setDataSource(myPostgresSqlDataSource());
+
         return jdbcTemplate;
     }
 }
