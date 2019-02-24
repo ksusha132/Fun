@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Repository("UserDao")
@@ -19,7 +20,8 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void save(UserModel user) {
         String qr = "INSERT INTO person (id, name, email, birthday, role) VALUES (?,?,?,?,?)";
-        jdbcTemplate.update(qr, UtilHelper.createID(), user.getName(), user.getEmail(), user.getBirthday(), user.getRole());
+        jdbcTemplate.update(qr, UtilHelper.createID(), user.getName(), user.getEmail(),
+                Timestamp.valueOf(user.getBirthday().atStartOfDay()), user.getRole());
     }
 
     @Override
