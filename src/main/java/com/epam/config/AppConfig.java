@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan("com.epam")
+@EnableAspectJAutoProxy
 @PropertySources({
         @PropertySource("classpath:auditoriumRed.properties"),
         @PropertySource("classpath:auditoriumGreen.properties"),

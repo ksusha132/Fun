@@ -38,8 +38,8 @@ public class BookingServiceImpl implements BookingService {
         UserDto userDto = userService.getUserByEmail(user);
         EventDto eventDto = eventService.getByNameAddTime(event, dateTime);
         AuditoriumModel auditoriumModel = auditoriumService.getByName(eventDto.getAuditoriumName()
-                .replace(" ", ""));
-        Double price = null;
+                .replace(" ", "")); // todo wtf??
+        Double price;
         if (isVipSeat(seat, auditoriumModel)) {
             price = eventDto.getBasePrice() * 1.5 * getRaitCoff(eventDto);
         } else {

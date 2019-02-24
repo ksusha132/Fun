@@ -72,7 +72,8 @@ public class EventController {
     @GetMapping(value = "/getEventByName/{name}")
     public ModelAndView getUser(@PathVariable("name") String name) throws EmptyResultDataAccessException {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("eventObject", eventService.getByName(name));
+        EventDto eventDto = eventService.getByName(name);
+        modelAndView.addObject("eventObject", eventDto);
         modelAndView.setViewName("event");
         return modelAndView;
     }
