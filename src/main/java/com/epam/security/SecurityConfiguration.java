@@ -24,35 +24,23 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     TokenDao tokenDao; // for remember me
 
-
     @Autowired
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
         auth.authenticationProvider(authenticationProvider());
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("user")
-                .password("password")
-                .roles("USER")
-                .and()
-                .withUser("admin")
-                .password("password")
-                .roles("ADMIN_ROLE", "USER_ROLE");
-    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("user/register", "/").permitAll()
-                .antMatchers("/ticket/**").hasRole("ADMIN")
+                .antMatchers("user/register", "/", "user/login").permitAll()
+                .antMatchers("/ticket/**").hasRole("ADMIN_ROLE")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login")
-                .permitAll();
+                .loginPage("/user/login")
+                .permitAll()
+                .and().csrf().disable();
     }
 
 

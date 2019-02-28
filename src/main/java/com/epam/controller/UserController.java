@@ -24,6 +24,13 @@ public class UserController {
         return modelAndView;
     }
 
+    @GetMapping(value = "/login")
+    public ModelAndView login() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("login");
+        return modelAndView;
+    }
+
     @GetMapping(value = "/register")
     public ModelAndView registerUser() {
         ModelAndView modelAndView = new ModelAndView();
