@@ -5,11 +5,9 @@
     <title>Register user</title>
 </head>
 <body>
-<form action="/user/register" method="post">
-    First name: <input type="text" name="name"><br>
+<form action="/user/login" method="post">
     Email: <input type="text" name="email"><br>
     Password: <input type="password" name="password"><br>
-    Birth date: <input type="text" name="birthday"><br>
     <input type="submit" value="Submit">
 </form>
 </body>
