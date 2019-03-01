@@ -20,7 +20,7 @@ public class CustomLogoutHandler extends
             Authentication authentication)
             throws IOException, ServletException {
 
-        String refererUrl = request.getHeader("Referer");
+        String refererUrl = request.getHeader("Referer"); // login
 
         super.onLogoutSuccess(request, response, authentication);
     }

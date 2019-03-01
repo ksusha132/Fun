@@ -5,10 +5,19 @@
     <title>Register user</title>
 </head>
 <body>
-<form action="/user/login" method="post">
-    Email: <input type="text" name="email"><br>
-    Password: <input type="password" name="password"><br>
-    <input type="submit" value="Submit">
-</form>
+<div>
+    <form name="form" action="/user/login" method="post">
+        <fieldset>
+            <legend>Please Login</legend>
+            <label for="email">Username</label>
+            <input type="text" id="email" name="email"/>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password"/>
+            <div class="form-actions">
+                <button type="submit" class="btn">Log in</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
 </body>
 </html>

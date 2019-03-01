@@ -33,14 +33,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("user/register", "/", "user/login").permitAll()
-                .antMatchers("/ticket/**").hasRole("ADMIN_ROLE")
+                .antMatchers("/user/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/user/login")
+                .usernameParameter("email")
+                .passwordParameter("password")
                 .permitAll()
-                .and().csrf().disable();
+                .and()
+                .logout()
+                .permitAll();
+        http.cors().and().csrf().disable();
     }
 
 
