@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 @Configuration
@@ -23,6 +24,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     PersistentTokenRepository tokenRepository;
+
     @Autowired
     private CustomLogoutHandler customLogoutHandler;
 
@@ -34,6 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // todo protect resources according to roles (watch courses)
         http.authorizeRequests()
                 .antMatchers("/user/**").permitAll()
                 .anyRequest().authenticated()
@@ -50,6 +53,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable();
     }
 
+    @Bean
+    public PersistentTokenBasedRememberMeServices getPersistentTokenBasedRememberMeServices() {
+        PersistentTokenBasedRememberMeServices tokenBasedservice = new PersistentTokenBasedRememberMeServices(
+                "remember-me", userDetailsService, tokenRepository);
+        return tokenBasedservice;
+    }
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
