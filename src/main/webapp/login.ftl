@@ -13,6 +13,9 @@
             <input type="text" id="email" name="email"/>
             <label for="password">Password</label>
             <input type="password" id="password" name="password"/>
+            <div class="checkbox">
+                <label><input type="checkbox" id="rememberme" name="remember-me"> Remember Me</label>
+            </div>
             <div class="form-actions">
                 <button type="submit" class="btn">Log in</button>
             </div>

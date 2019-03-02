@@ -1,6 +1,5 @@
 package com.epam.security;
 
-import com.epam.dao.TokenDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -12,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -22,7 +22,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     CustomUserDetailsService userDetailsService;
 
     @Autowired
-    TokenDao tokenDao; // for remember me
+    PersistentTokenRepository tokenRepository;
+    @Autowired
+    private CustomLogoutHandler customLogoutHandler;
 
     @Autowired
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
@@ -41,9 +43,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .permitAll()
-                .and()
-                .logout()
-                .permitAll();
+                .and().logout().logoutSuccessHandler(customLogoutHandler).clearAuthentication(true).logoutSuccessUrl("user/login")
+                .deleteCookies("auth_code", "JSESSIONID")
+                .and().rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository)
+                .tokenValiditySeconds(86400);
         http.cors().and().csrf().disable();
     }
 
