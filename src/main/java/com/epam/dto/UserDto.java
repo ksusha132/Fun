@@ -17,4 +17,5 @@ public class UserDto {
     private LocalDate birthday;
     private String email;
     private String role;
+    private Double balance;
 }

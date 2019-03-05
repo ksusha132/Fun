@@ -4,15 +4,18 @@ import com.epam.dao.TicketDao;
 import com.epam.dto.BookTicketDto;
 import com.epam.dto.EventDto;
 import com.epam.dto.UserDto;
+import com.epam.exception.NotEnoughMoneyException;
 import com.epam.model.AuditoriumModel;
 import com.epam.model.BookTicketModel;
 import com.epam.service.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -79,8 +82,21 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public void bookTickets(BookTicketDto ticket) {
+        UserDto userDto = Optional.ofNullable(userService.getUserById(ticket.getIdUser()))
+                .orElseThrow(() -> new UsernameNotFoundException("Not found user id = " + ticket.getIdUser()));
+
+        Double balance = userDto.getBalance();
+        Double price = ticket.getPrice();
+
+        if (balance < price) {
+            throw new NotEnoughMoneyException(balance);
+        }
+
+        userService.changeCountMoney(userDto.getEmail(), (balance - price));
+
         BookTicketModel bookTicketModel = new BookTicketModel();
         BeanUtils.copyProperties(ticket, bookTicketModel);
+
         ticketDao.bookTicket(bookTicketModel);
     }
 
@@ -109,7 +125,3 @@ public class BookingServiceImpl implements BookingService {
         return bookTicketDto;
     }
 }
-//todo add AOP
-//todo create more kind of exceptions
-//todo watch videos
-//todo and create loading script (import SQL)

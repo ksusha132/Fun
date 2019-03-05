@@ -6,9 +6,12 @@ import com.epam.model.UserModel;
 import com.epam.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -58,5 +61,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto getUserByEmail(String email) {
         return getBy(email, appliedValue -> userDao.getByEmail((String) appliedValue));
+    }
+
+    @Override
+    @Transactional
+    public void changeCountMoney(String email, Double money) {
+        if (!Optional.ofNullable(userDao.getByEmail(email)).isPresent()) {
+            throw new UsernameNotFoundException("There is no user");
+        }
+        userDao.changeCountMoney(email, money);
     }
 }

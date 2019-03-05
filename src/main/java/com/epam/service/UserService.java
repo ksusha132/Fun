@@ -14,4 +14,6 @@ public interface UserService {
     UserDto getUserById(Integer id);
 
     UserDto getUserByEmail(String email);
+
+    void changeCountMoney(String email, Double bigDecimal);
 }

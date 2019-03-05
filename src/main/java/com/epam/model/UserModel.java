@@ -18,4 +18,5 @@ public class UserModel {
     private LocalDate birthday;
     private String role;
     private String password;
+    private Double balance;
 }

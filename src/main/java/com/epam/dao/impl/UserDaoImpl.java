@@ -47,4 +47,10 @@ public class UserDaoImpl implements UserDao {
         String SQL = "SELECT * FROM person WHERE email = ?";
         return jdbcTemplate.queryForObject(SQL, new Object[]{email}, new BeanPropertyRowMapper<>(UserModel.class));
     }
+
+    @Override
+    public void changeCountMoney(String email, Double money) {
+        String SQL = "UPDATE person SET balance = ? WHERE mail = ?";
+        this.jdbcTemplate.update(SQL, email, money);
+    }
 }

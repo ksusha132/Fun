@@ -14,4 +14,6 @@ public interface UserDao {
     UserModel getById(Integer id);
 
     UserModel getByEmail(String email);
+
+    void changeCountMoney(String email, Double money);
 }

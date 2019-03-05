@@ -52,6 +52,13 @@ public class UserController {
     }
 
 
+    @PostMapping(value = "/addMoney/{email}/{amount}")
+    public ModelAndView registerUser(@PathVariable String email, @PathVariable String amount, ModelAndView modelAndView) {
+        userService.changeCountMoney(email, Double.valueOf(amount));
+        modelAndView.setViewName("index");
+        return modelAndView;
+    }
+
     @GetMapping(value = "/delete/{id}")
     public ModelAndView deleteUser(@PathVariable Integer id) {
         userService.delete(id);
