@@ -50,7 +50,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void changeCountMoney(String email, Double money) {
-        String SQL = "UPDATE person SET balance = ? WHERE mail = ?";
-        this.jdbcTemplate.update(SQL, email, money);
+        String SQL = "UPDATE person SET balance = ? WHERE email = ?";
+        this.jdbcTemplate.update(SQL, money, email);
     }
 }

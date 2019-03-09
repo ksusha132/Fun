@@ -51,11 +51,17 @@ public class UserController {
         return modelAndView;
     }
 
+    @GetMapping(value = "/addMoney")
+    public ModelAndView addMoney(ModelAndView modelAndView) {
+        modelAndView.setViewName("userUpdate");
+        return modelAndView;
+    }
 
-    @PostMapping(value = "/addMoney/{email}/{amount}")
-    public ModelAndView registerUser(@PathVariable String email, @PathVariable String amount, ModelAndView modelAndView) {
+    @PostMapping(value = "/addMoney")
+    public ModelAndView addMoney(@RequestParam String email, @RequestParam String amount,
+                                 ModelAndView modelAndView) {
         userService.changeCountMoney(email, Double.valueOf(amount));
-        modelAndView.setViewName("index");
+        modelAndView.setViewName("user");
         return modelAndView;
     }
 
