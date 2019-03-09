@@ -16,4 +16,6 @@ public interface UserService {
     UserDto getUserByEmail(String email);
 
     void changeCountMoney(String email, Double bigDecimal);
+
+    void updateBalance(String email, Double bigDecimal);
 }

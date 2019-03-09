@@ -60,7 +60,7 @@ public class UserController {
     @PostMapping(value = "/addMoney")
     public ModelAndView addMoney(@RequestParam String email, @RequestParam String amount,
                                  ModelAndView modelAndView) {
-        userService.changeCountMoney(email, Double.valueOf(amount));
+        userService.updateBalance(email, Double.valueOf(amount));
         modelAndView.setViewName("user");
         return modelAndView;
     }

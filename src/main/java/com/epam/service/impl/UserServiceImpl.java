@@ -66,12 +66,20 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void changeCountMoney(String email, Double money) {
+        userDao.changeCountMoney(email, money);
+    }
+
+    @Override
+    public void updateBalance(String email, Double money) {
         Optional<UserModel> user = Optional.ofNullable(userDao.getByEmail(email));
         if (!user.isPresent()) {
             throw new UsernameNotFoundException("There is no user");
         }
+        // todo think of -
+
         Double balance = user.get().getBalance();
         Double newBalance = balance + money;
-        userDao.changeCountMoney(email, newBalance);
+
+        changeCountMoney(email, newBalance);
     }
 }
